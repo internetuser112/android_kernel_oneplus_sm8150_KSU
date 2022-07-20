@@ -1383,11 +1383,21 @@ page_hit:
 			  next_blkaddr_of_node(page));
 		err = -EINVAL;
 out_err:
+<<<<<<< HEAD
 		ClearPageUptodate(page);
 		f2fs_put_page(page, 1);
 		return ERR_PTR(err);
 	}
 	return page;
+=======
+	ClearPageUptodate(page);
+out_put_err:
+	/* ENOENT comes from read_node_page which is not an error. */
+	if (err != -ENOENT)
+		f2fs_handle_page_eio(sbi, page->index, NODE);
+	f2fs_put_page(page, 1);
+	return ERR_PTR(err);
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 }
 
 struct page *f2fs_get_node_page(struct f2fs_sb_info *sbi, pgoff_t nid)

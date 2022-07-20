@@ -10,9 +10,14 @@
 #include "exfat.h"
 #include "core.h"
 
+<<<<<<< HEAD
 #define DEBUG_HASH_LIST
 #define DEBUG_HASH_PREV	(0xAAAA5555)
 #define DEBUG_HASH_NEXT	(0x5555AAAA)
+=======
+#include "exfat_raw.h"
+#include "exfat_fs.h"
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 
 #define LOCKBIT         (0x01)
 #define DIRTYBIT        (0x02)

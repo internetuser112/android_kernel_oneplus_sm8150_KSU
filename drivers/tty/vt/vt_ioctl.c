@@ -241,6 +241,7 @@ int vt_waitactive(int n)
 #define GPLAST 0x3df
 #define GPNUM (GPLAST - GPFIRST + 1)
 
+<<<<<<< HEAD
 
 
 static inline int 
@@ -283,6 +284,8 @@ do_fontx_ioctl(int cmd, struct consolefontdesc __user *user_cfd, int perm, struc
 	return -EINVAL;
 }
 
+=======
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 static inline int 
 do_unimap_ioctl(int cmd, struct unimapdesc __user *user_ud, int perm, struct vc_data *vc)
 {
@@ -905,6 +908,7 @@ int vt_ioctl(struct tty_struct *tty,
 		break;
 	}
 
+<<<<<<< HEAD
 	case PIO_FONT: {
 		if (!perm)
 			return -EPERM;
@@ -929,6 +933,8 @@ int vt_ioctl(struct tty_struct *tty,
 		break;
 	}
 
+=======
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 	case PIO_CMAP:
                 if (!perm)
 			ret = -EPERM;
@@ -940,6 +946,7 @@ int vt_ioctl(struct tty_struct *tty,
                 ret = con_get_cmap(up);
 		break;
 
+<<<<<<< HEAD
 	case PIO_FONTX:
 	case GIO_FONTX:
 		ret = do_fontx_ioctl(cmd, up, perm, &op);
@@ -970,6 +977,8 @@ int vt_ioctl(struct tty_struct *tty,
 #endif
 	}
 
+=======
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 	case KDFONTOP: {
 		if (copy_from_user(&op, up, sizeof(op))) {
 			ret = -EFAULT;
@@ -1083,6 +1092,7 @@ void vc_SAK(struct work_struct *work)
 
 #ifdef CONFIG_COMPAT
 
+<<<<<<< HEAD
 struct compat_consolefontdesc {
 	unsigned short charcount;       /* characters in font (256 or 512) */
 	unsigned short charheight;      /* scan lines per character (1-32) */
@@ -1129,6 +1139,8 @@ compat_fontx_ioctl(int cmd, struct compat_consolefontdesc __user *user_cfd,
 	return -EINVAL;
 }
 
+=======
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 struct compat_console_font_op {
 	compat_uint_t op;        /* operation code KD_FONT_OP_* */
 	compat_uint_t flags;     /* KD_FONT_FLAG_* */
@@ -1206,11 +1218,14 @@ long vt_compat_ioctl(struct tty_struct *tty,
 	/*
 	 * these need special handlers for incompatible data structures
 	 */
+<<<<<<< HEAD
 	case PIO_FONTX:
 	case GIO_FONTX:
 		ret = compat_fontx_ioctl(cmd, up, perm, &op);
 		break;
 
+=======
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 	case KDFONTOP:
 		ret = compat_kdfontop_ioctl(up, perm, &op, vc);
 		break;

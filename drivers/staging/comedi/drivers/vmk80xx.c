@@ -689,7 +689,11 @@ static int vmk80xx_alloc_usb_buffers(struct comedi_device *dev)
 	if (!devpriv->usb_rx_buf)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	size = usb_endpoint_maxp(devpriv->ep_tx);
+=======
+	size = max(usb_endpoint_maxp(devpriv->ep_tx), MIN_BUF_SIZE);
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 	devpriv->usb_tx_buf = kzalloc(size, GFP_KERNEL);
 	if (!devpriv->usb_tx_buf)
 		return -ENOMEM;

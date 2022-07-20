@@ -1299,6 +1299,7 @@ int extcon_dev_register(struct extcon_dev *edev)
 		edev->dev.type = &edev->extcon_dev_type;
 	}
 
+<<<<<<< HEAD
 	ret = device_register(&edev->dev);
 	if (ret) {
 		put_device(&edev->dev);
@@ -1318,6 +1319,36 @@ int extcon_dev_register(struct extcon_dev *edev)
 	if (!edev->bnh) {
 		ret = -ENOMEM;
 		goto err_dev;
+=======
+	spin_lock_init(&edev->lock);
+	if (edev->max_supported) {
+		edev->nh = kcalloc(edev->max_supported, sizeof(*edev->nh),
+				GFP_KERNEL);
+		if (!edev->nh) {
+			ret = -ENOMEM;
+			goto err_alloc_nh;
+		}
+	}
+
+	edev->bnh = kzalloc(sizeof(*edev->bnh) * edev->max_supported, GFP_KERNEL);
+	if (!edev->bnh) {
+		ret = -ENOMEM;
+		goto err_dev;
+	}
+
+	for (index = 0; index < edev->max_supported; index++)
+		RAW_INIT_NOTIFIER_HEAD(&edev->nh[index]);
+
+	RAW_INIT_NOTIFIER_HEAD(&edev->nh_all);
+
+	dev_set_drvdata(&edev->dev, edev);
+	edev->state = 0;
+
+	ret = device_register(&edev->dev);
+	if (ret) {
+		put_device(&edev->dev);
+		goto err_reg;
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 	}
 
 	for (index = 0; index < edev->max_supported; index++)
@@ -1334,6 +1365,8 @@ int extcon_dev_register(struct extcon_dev *edev)
 
 	return 0;
 
+err_reg:
+	kfree(edev->bnh);
 err_dev:
 	if (edev->max_supported)
 		kfree(edev->extcon_dev_type.groups);
@@ -1396,6 +1429,7 @@ void extcon_dev_unregister(struct extcon_dev *edev)
 		kfree(edev->extcon_dev_type.groups);
 		kfree(edev->cables);
 	}
+	kfree(edev->bnh);
 
 	put_device(&edev->dev);
 }

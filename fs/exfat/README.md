@@ -1,5 +1,8 @@
-# exfat-linux
+## exFAT filesystem 
+This is the exfat filesystem for support from the linux 4.1 kernel
+to the latest kernel. 
 
+<<<<<<< HEAD
 This __exFAT filesystem module for Linux kernel__ is based on `sdFAT` drivers by Samsung, which is used with their smartphone lineups.
 
 The main objective of **exfat-linux** is to provide the best generic kernel drivers for exFAT. That means Samsung-specific modifications such as fat12/16/32 handlings, defrag and etc has been removed to make the code portable.
@@ -83,32 +86,36 @@ If you're using `git`, using `git subtree` or `git submodule` is highly recommen
 1. Add this repository to `fs/exfat`
 
 2. Modify `fs/Kconfig`
+=======
+## Installing as a stand-alone module
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 
+Install prerequisite package for Fedora, RHEL:
 ```
- menu "DOS/FAT/NT Filesystems"
-
- source "fs/fat/Kconfig"
-+source "fs/exfat/Kconfig"
- source "fs/ntfs/Kconfig"
- endmenu
-```
-
-3. Modify `fs/Makefile`
-
-```
- obj-$(CONFIG_FAT_FS)    += fat/
-+obj-$(CONFIG_EXFAT_FS)  += exfat/
- obj-$(CONFIG_BFS_FS)    += bfs/
+	yum install kernel-devel-$(uname -r)
 ```
 
-And you're good to go!
+Build step:
+```
+	make
+	sudo make install
+```
 
-## Benchmarks
+To load the driver manually, run this as root:
+```
+	modprobe exfat
+```
 
-For reference, existing exFAT implementations were tested and compared on a server running Ubuntu 16.04 with Linux kernel 4.14 under a contained virtual machine.
 
-Linux 4.14 was used as higher LTS kernels don't work with [exfat-nofuse] at the time of testing.
+## Installing as a part of the kernel
 
+1. Let's take [linux] as the path to your kernel source dir.
+```
+	cd [linux]
+	cp -ar exfat [linux]/fs/
+```
+
+<<<<<<< HEAD
 ### ● Ramdisk
 
 #### fio sequential I/O
@@ -200,3 +207,27 @@ Linux 4.14 was used as higher LTS kernels don't work with [exfat-nofuse] at the 
   * This is enabled by default, please pass `nodelayed_meta` to disable it.
 
 ## Enjoy!
+=======
+2. edit [linux]/fs/Kconfig
+```
+	source "fs/fat/Kconfig"
+	+source "fs/exfat/Kconfig"
+	source "fs/ntfs/Kconfig"
+```
+
+3. edit [linux]/fs/Makefile
+```
+	obj-$(CONFIG_FAT_FS)          += fat/
+	+obj-$(CONFIG_EXFAT_FS)       += exfat/
+	obj-$(CONFIG_BFS_FS)          += bfs/
+```
+4. make menuconfig and set exfat
+```
+	File systems  --->
+		DOS/FAT/NT Filesystems  --->
+			<M> exFAT filesystem support
+			(utf8) Default iocharset for exFAT
+```
+
+build your kernel
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)

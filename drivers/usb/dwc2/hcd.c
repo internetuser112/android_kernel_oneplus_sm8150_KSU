@@ -5228,6 +5228,13 @@ int dwc2_hcd_init(struct dwc2_hsotg *hsotg)
 	hcd->has_tt = 1;
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+<<<<<<< HEAD
+=======
+	if (!res) {
+		retval = -EINVAL;
+		goto error2;
+	}
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 	hcd->rsrc_start = res->start;
 	hcd->rsrc_len = resource_size(res);
 

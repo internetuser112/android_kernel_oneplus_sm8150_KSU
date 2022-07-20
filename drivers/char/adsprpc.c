@@ -3223,7 +3223,11 @@ static ssize_t fastrpc_debugfs_read(struct file *filp, char __user *buffer,
 				"%-20d|0x%-20lX\n\n",
 				map->secure, map->attr);
 		}
+<<<<<<< HEAD
 
+=======
+		mutex_unlock(&fl->map_mutex);
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 		len += scnprintf(fileinfo + len, DEBUGFS_SIZE - len,
 			"\n======%s %s %s======\n", title,
 			" LIST OF BUFS ", title);

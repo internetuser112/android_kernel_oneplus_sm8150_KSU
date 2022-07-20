@@ -27,6 +27,12 @@ static int gc_thread_func(void *data)
 	struct f2fs_gc_kthread *gc_th = sbi->gc_thread;
 	wait_queue_head_t *wq = &sbi->gc_thread->gc_wait_queue_head;
 	unsigned int wait_ms;
+<<<<<<< HEAD
+=======
+	struct f2fs_gc_control gc_control = {
+		.victim_segno = NULL_SEGNO,
+		.err_gc_skipped = false };
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 
 	wait_ms = gc_th->min_sleep_time;
 
@@ -81,8 +87,15 @@ static int gc_thread_func(void *data)
 		 */
 		if (sbi->gc_mode == GC_URGENT) {
 			wait_ms = gc_th->urgent_sleep_time;
+<<<<<<< HEAD
 			down_write(&sbi->gc_lock);
+=======
+			f2fs_down_write(&sbi->gc_lock);
+			gc_control.should_migrate_blocks = true;
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 			goto do_gc;
+		} else {
+			gc_control.should_migrate_blocks = false;
 		}
 
 		if (!down_write_trylock(&sbi->gc_lock)) {
@@ -104,7 +117,9 @@ static int gc_thread_func(void *data)
 do_gc:
 		stat_inc_bggc_count(sbi->stat_info);
 
-		sync_mode = F2FS_OPTION(sbi).bggc_mode == BGGC_MODE_SYNC;
+		sync_mode = F2FS_OPTION(sbi).bggc_mode == BGGC_MODE_SYNC ||
+				sbi->gc_mode == GC_URGENT_HIGH ||
+				sbi->gc_mode == GC_URGENT_MID;
 
 		/* if return value is not zero, no victim was selected */
 		if (f2fs_gc(sbi, sync_mode, true, NULL_SEGNO))

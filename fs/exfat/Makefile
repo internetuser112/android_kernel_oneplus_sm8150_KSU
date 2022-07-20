@@ -1,14 +1,16 @@
 #
 # Makefile for the linux FAT12/16/32(VFAT)/64(exFAT) filesystem driver.
 #
-
 ifneq ($(KERNELRELEASE),)
-# Called from inline kernel build
-# DKMS_DEFINE
 obj-$(CONFIG_EXFAT_FS) += exfat.o
 
+<<<<<<< HEAD
 exfat-objs	:= super.o core.o core_exfat.o blkdev.o fatent.o cache.o \
 		   nls.o misc.o extent.o xattr.o
+=======
+exfat-y	:= inode.o namei.o dir.o super.o fatent.o cache.o nls.o misc.o \
+	   file.o balloc.o
+>>>>>>> 97f24f46f3cc (Merge remote-tracking branch 'origin/R-base' into R)
 else
 # Called from external kernel module build
 
