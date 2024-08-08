@@ -57,6 +57,7 @@ jobs:
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
     - name: Build Kernel
       run: |
+       find ./ -name Kconfig -exec dos2unix {} \;
        export PATH=$(pwd)/clang/bin/:$(pwd)/aarch64/bin/:$PATH
        export ARCH=arm64
        export SUBARCH=arm64
@@ -69,5 +70,5 @@ jobs:
     - name: Upload Kernel-SU
       uses: actions/upload-artifact@v4
       with:
-        name: OP7-OOS11-kernel-SU-${{ steps.get_version.outputs.VERSION }}
+        name: OP7-OOS11-kernel-SU
         path: "AnyKernel3/*"
