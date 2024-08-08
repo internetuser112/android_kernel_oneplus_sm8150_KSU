@@ -42,7 +42,7 @@ jobs:
         sudo apt install gcc-aarch64-linux-gnu -y
         sudo apt install gcc-arm-linux-gnueabi -y
         sudo apt install clang-14 -y
-        sudo apt install binutils make python3 libssl-dev build-essential bc  bison flex unzip libssl-dev ca-certificates xz-utils mkbootimg cpio device-tree-compiler git git-lfs -y
+        sudo apt install binutils make python3 libssl-dev build-essential bc  bison flex unzip libssl-dev ca-certificates xz-utils mkbootimg cpio device-tree-compiler git git-lfs dos2unix -y
         git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 aarch64 --depth=1
         git clone https://github.com/snowwolf725/AnyKernel3 -b oneplus7 --depth=1
         rm -rf AnyKernel3/.git
@@ -54,6 +54,7 @@ jobs:
         sudo rm -rf "$AGENT_TOOLSDIRECTORY"
     - name: Config KSU
       run: |
+        sudo rm -rf ./KernelSU
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
     - name: Build Kernel
       run: |
