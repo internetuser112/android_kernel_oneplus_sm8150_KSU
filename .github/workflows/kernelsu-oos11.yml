@@ -56,6 +56,20 @@ jobs:
       run: |
         sudo rm -rf ./KernelSU
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
+    - name: 🦾 Setup Kali-Nethunter
+      run: |
+        git clone https://github.com/tomxi1997/kali-nethunter_patches.git
+        patch -p1 < kali-nethunter_patches/add-rtl88xxau-5.6.4.2-drivers.patch
+        patch -p1 < kali-nethunter_patches/add-wifi-injection-4.14.patch
+        patch -p1 < kali-nethunter_patches/fix-ath9k-naming-conflict.patch
+        sleep 8
+        git clone https://github.com/acai66/Kali-defconfig-checker kali
+        cd kali
+        chmod +x *.sh
+        chmod +x check-kernel-config
+        cp * ..
+        cd ..
+        ./check-kernel-config arch/arm64/configs/$KERNEL_DEFCONFIG -w
     - name: Build Kernel
       run: |
        find ./ -name Kconfig -exec dos2unix {} \;
