@@ -55,7 +55,6 @@ jobs:
     - name: Config KSU
       run: |
         sudo rm -rf ./KernelSU
-        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
     - name: 🦾 Setup Kali-Nethunter
       run: |
         git clone https://github.com/tomxi1997/kali-nethunter_patches.git
@@ -85,5 +84,5 @@ jobs:
     - name: Upload Kernel-SU
       uses: actions/upload-artifact@v4
       with:
-        name: OP7-OOS11-Nethunter-kernel-SU
+        name: OP7-OOS11-Nethunter-Non-KernelSU
         path: "AnyKernel3/*"
