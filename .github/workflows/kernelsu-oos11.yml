@@ -85,5 +85,5 @@ jobs:
     - name: Upload Kernel-SU
       uses: actions/upload-artifact@v4
       with:
-        name: OP7-OOS11-kernel-SU
+        name: OP7-OOS11-Nethunter-kernel-SU
         path: "AnyKernel3/*"
