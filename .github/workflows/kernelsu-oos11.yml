@@ -55,6 +55,7 @@ jobs:
     - name: Config KSU
       run: |
         sudo rm -rf ./KernelSU
+        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
     - name: 🦾 Setup Kali-Nethunter
       run: |
         git clone https://github.com/tomxi1997/kali-nethunter_patches.git
